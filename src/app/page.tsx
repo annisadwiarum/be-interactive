@@ -1,103 +1,229 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import AnimatedSection from "@/components/AnimatedSection";
+import NavItem from "@/components/NavItem";
+import PreLoad from "@/components/PreLoad";
+import ProjectCard from "@/components/ProjectCard";
+import SkillBadge from "@/components/SkillBadge";
+import SocialLink from "@/components/SocialLink";
+import { AnimatePresence, motion, useScroll } from "framer-motion";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Twitter,
+  Instagram,
+  Facebook,
+} from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+
+// --- Main App Component ---
+export default function PortfolioPage() {
+  const scrollRef = useRef(null);
+  const { scrollYProgress } = useScroll({ container: scrollRef });
+
+  // --- State untuk mengontrol preloader ---
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Sembunyikan preloader setelah animasi selesai
+  useEffect(() => {
+    // Perkiraan durasi preloader. Anda bisa menyesuaikannya jika perlu.
+    const totalDuration = 8000;
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      document.body.style.overflow = "unset";
+    }, totalDuration);
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "unset";
+    };
+  }, []);
+
+  // Total delay untuk animasi konten utama masuk
+  const contentAnimationDelay = 5000 / 1000;
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="bg-[#111111] text-gray-200 font-sans">
+      <AnimatePresence>{isLoading && <PreLoad />}</AnimatePresence>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <main
+        className={`min-h-screen flex flex-col lg:flex-row ${
+          isLoading
+            ? "opacity-0"
+            : "opacity-100 transition-opacity duration-500"
+        }`}
+      >
+        {/* Left Side: Info & Navigation */}
+        <div className="lg:w-1/2 lg:h-screen lg:flex lg:flex-col justify-between p-8 lg:p-12 sticky top-0">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: isLoading ? contentAnimationDelay : 0,
+              }}
+            >
+              <h1 className="text-4xl md:text-5xl font-bold text-white">
+                アニサ
+              </h1>
+              <h2 className="text-xl md:text-2xl text-cyan-400 mt-2">
+                Frontend Developer & Creative Coder
+              </h2>
+              <p className="mt-4 text-gray-400 max-w-md">
+                Saya mengubah ide-ide kompleks menjadi pengalaman digital yang
+                indah, intuitif, dan dapat diakses.
+              </p>
+            </motion.div>
+
+            <motion.nav
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: isLoading ? contentAnimationDelay + 0.2 : 0.2,
+                duration: 0.5,
+              }}
+              className="mt-12 hidden lg:block"
+            >
+              <ul className="space-y-4">
+                <li>
+                  <NavItem
+                    href="#projects"
+                    text="Proyek"
+                    scrollYProgress={scrollYProgress}
+                    range={[0, 0.5]}
+                  />
+                </li>
+                <li>
+                  <NavItem
+                    href="#skills"
+                    text="Keahlian"
+                    scrollYProgress={scrollYProgress}
+                    range={[0.5, 0.8]}
+                  />
+                </li>
+                <li>
+                  <NavItem
+                    href="#contact"
+                    text="Kontak"
+                    scrollYProgress={scrollYProgress}
+                    range={[0.8, 1]}
+                  />
+                </li>
+              </ul>
+            </motion.nav>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: isLoading ? contentAnimationDelay + 0.4 : 0.4,
+              duration: 0.5,
+            }}
+            className="flex items-center space-x-4 mt-8 lg:mt-0"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <SocialLink
+              href="https://github.com/annisadwiarum"
+              icon={<Github size={20} />}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <SocialLink
+              href="https://www.linkedin.com/in/annisadwiarum/"
+              icon={<Linkedin size={20} />}
+            />
+            <SocialLink
+              href="https://x.com/annisadwiarum"
+              icon={<Twitter size={20} />}
+            />
+            <SocialLink
+              href="https://www.instagram.com/annisadwiarum"
+              icon={<Instagram size={20} />}
+            />
+            <SocialLink
+              href="https://www.facebook.com/annisa.d.arum"
+              icon={<Facebook size={20} />}
+            />
+          </motion.div>
+        </div>
+
+        {/* Right Side: Scrollable Content */}
+        <div ref={scrollRef} className="lg:w-1/2 lg:h-screen overflow-y-scroll">
+          <div className="p-8 lg:p-12">
+            <AnimatedSection id="projects">
+              <h3 className="text-2xl font-bold text-white mb-6">
+                Proyek Unggulan
+              </h3>
+              <div className="space-y-8">
+                <ProjectCard
+                  title="E-commerce Platform"
+                  description="Platform marketplace modern dengan fitur real-time chat dan sistem pembayaran terintegrasi."
+                  tags={["Next.js", "TypeScript", "Node.js", "Socket.IO"]}
+                  liveUrl="#"
+                  codeUrl="#"
+                />
+                <ProjectCard
+                  title="Company Profile Interaktif"
+                  description="Website profil perusahaan dengan animasi 3D dan transisi halaman yang mulus menggunakan Framer Motion."
+                  tags={["Next.js", "Framer Motion", "Three.js"]}
+                  liveUrl="#"
+                  codeUrl="#"
+                />
+                <ProjectCard
+                  title="Sistem Manajemen Proyek"
+                  description="Aplikasi berbasis Laravel untuk manajemen tugas dan kolaborasi tim dengan arsitektur modular."
+                  tags={["Laravel", "PHP", "Vue.js"]}
+                  liveUrl="#"
+                  codeUrl="#"
+                />
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection id="skills">
+              <h3 className="text-2xl font-bold text-white mb-6 mt-16">
+                Keahlian & Teknologi
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <SkillBadge name="TypeScript" />
+                <SkillBadge name="Next.js" />
+                <SkillBadge name="React" />
+                <SkillBadge name="Node.js" />
+                <SkillBadge name="Tailwind CSS" />
+                <SkillBadge name="Framer Motion" />
+                <SkillBadge name="Laravel" />
+                <SkillBadge name="Git" />
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection id="contact">
+              <div className="mt-16 bg-gray-900/50 rounded-lg p-8">
+                <h3 className="text-2xl font-bold text-white">
+                  Punya Ide Keren?
+                </h3>
+                <p className="text-gray-400 mt-2">
+                  Saya selalu terbuka untuk kolaborasi atau sekadar ngobrol
+                  tentang teknologi. Mari terhubung!
+                </p>
+                <motion.a
+                  href="mailto:annisadwiarum710@gmail.com"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center gap-2 mt-6 bg-cyan-500 text-gray-900 font-bold py-3 px-6 rounded-lg"
+                >
+                  Kirim Email <Mail size={18} />
+                </motion.a>
+              </div>
+            </AnimatedSection>
+
+            <footer className="text-center text-gray-500 text-sm py-8 mt-8">
+              Didesain & Dibuat dengan ❤️ oleh アニサ
+            </footer>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
