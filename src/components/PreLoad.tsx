@@ -46,7 +46,7 @@ const PreLoad = () => {
     const typingTimeout = setTimeout(() => {
       setCurrentLine((prev) => prev + words[lineIndex][charIndex]);
       setCharIndex(charIndex + 1);
-    }, 50); // Kecepatan mengetik
+    }, 30); // Kecepatan mengetik
 
     return () => clearTimeout(typingTimeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps

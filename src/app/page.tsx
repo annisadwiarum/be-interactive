@@ -6,7 +6,7 @@ import PreLoad from "@/components/PreLoad";
 import ProjectCard from "@/components/ProjectCard";
 import SkillBadge from "@/components/SkillBadge";
 import SocialLink from "@/components/SocialLink";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
+import { AnimatePresence, motion, useScroll, Variants } from "framer-motion";
 import {
   Github,
   Linkedin,
@@ -28,7 +28,7 @@ export default function PortfolioPage() {
   // Sembunyikan preloader setelah animasi selesai
   useEffect(() => {
     // Perkiraan durasi preloader. Anda bisa menyesuaikannya jika perlu.
-    const totalDuration = 8000;
+    const totalDuration = 7000;
 
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -43,31 +43,42 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  // Total delay untuk animasi konten utama masuk
-  const contentAnimationDelay = 5000 / 1000;
+  // UPDATE: Varian animasi untuk container utama dan anak-anaknya
+  const mainVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut",
+        staggerChildren: 0.2, // Memberi jeda animasi pada setiap anak
+      },
+    },
+  };
+
+  const childVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+  };
 
   return (
     <div className="bg-[#111111] text-gray-200 font-sans">
       <AnimatePresence>{isLoading && <PreLoad />}</AnimatePresence>
 
-      <main
-        className={`min-h-screen flex flex-col lg:flex-row ${
-          isLoading
-            ? "opacity-0"
-            : "opacity-100 transition-opacity duration-500"
-        }`}
+      <motion.main
+        variants={mainVariants}
+        initial="hidden"
+        animate={isLoading ? "hidden" : "visible"}
+        className="min-h-screen flex flex-col lg:flex-row"
       >
         {/* Left Side: Info & Navigation */}
         <div className="lg:w-1/2 lg:h-screen lg:flex lg:flex-col justify-between p-8 lg:p-12 sticky top-0">
           <div>
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: isLoading ? contentAnimationDelay : 0,
-              }}
-            >
+            <motion.div variants={childVariants}>
               <h1 className="text-4xl md:text-5xl font-bold text-white">
                 アニサ
               </h1>
@@ -75,25 +86,21 @@ export default function PortfolioPage() {
                 Frontend Developer & Creative Coder
               </h2>
               <p className="mt-4 text-gray-400 max-w-md">
-                Saya mengubah ide-ide kompleks menjadi pengalaman digital yang
-                indah, intuitif, dan dapat diakses.
+                I transform complex ideas into beautiful, intuitive, and
+                accessible digital experiences.
               </p>
             </motion.div>
 
             <motion.nav
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                delay: isLoading ? contentAnimationDelay + 0.2 : 0.2,
-                duration: 0.5,
-              }}
+              variants={childVariants}
+              ref={scrollRef}
               className="mt-12 hidden lg:block"
             >
               <ul className="space-y-4">
                 <li>
                   <NavItem
                     href="#projects"
-                    text="Proyek"
+                    text="Projects"
                     scrollYProgress={scrollYProgress}
                     range={[0, 0.5]}
                   />
@@ -101,7 +108,7 @@ export default function PortfolioPage() {
                 <li>
                   <NavItem
                     href="#skills"
-                    text="Keahlian"
+                    text="Skills"
                     scrollYProgress={scrollYProgress}
                     range={[0.5, 0.8]}
                   />
@@ -109,7 +116,7 @@ export default function PortfolioPage() {
                 <li>
                   <NavItem
                     href="#contact"
-                    text="Kontak"
+                    text="Contact"
                     scrollYProgress={scrollYProgress}
                     range={[0.8, 1]}
                   />
@@ -119,12 +126,7 @@ export default function PortfolioPage() {
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: isLoading ? contentAnimationDelay + 0.4 : 0.4,
-              duration: 0.5,
-            }}
+            variants={childVariants}
             className="flex items-center space-x-4 mt-8 lg:mt-0"
           >
             <SocialLink
@@ -155,7 +157,7 @@ export default function PortfolioPage() {
           <div className="p-8 lg:p-12">
             <AnimatedSection id="projects">
               <h3 className="text-2xl font-bold text-white mb-6">
-                Proyek Unggulan
+                Featured Projects
               </h3>
               <div className="space-y-8">
                 <ProjectCard
@@ -184,7 +186,7 @@ export default function PortfolioPage() {
 
             <AnimatedSection id="skills">
               <h3 className="text-2xl font-bold text-white mb-6 mt-16">
-                Keahlian & Teknologi
+               Skills & Technology
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 <SkillBadge name="TypeScript" />
@@ -201,11 +203,10 @@ export default function PortfolioPage() {
             <AnimatedSection id="contact">
               <div className="mt-16 bg-gray-900/50 rounded-lg p-8">
                 <h3 className="text-2xl font-bold text-white">
-                  Punya Ide Keren?
+                  Got a cool idea?
                 </h3>
                 <p className="text-gray-400 mt-2">
-                  Saya selalu terbuka untuk kolaborasi atau sekadar ngobrol
-                  tentang teknologi. Mari terhubung!
+                  I&apos;m always open to collaboration or just chatting about technology. Let&apos;s connect!
                 </p>
                 <motion.a
                   href="mailto:annisadwiarum710@gmail.com"
@@ -213,17 +214,17 @@ export default function PortfolioPage() {
                   whileTap={{ scale: 0.95 }}
                   className="inline-flex items-center gap-2 mt-6 bg-cyan-500 text-gray-900 font-bold py-3 px-6 rounded-lg"
                 >
-                  Kirim Email <Mail size={18} />
+                  Send Email <Mail size={18} />
                 </motion.a>
               </div>
             </AnimatedSection>
 
             <footer className="text-center text-gray-500 text-sm py-8 mt-8">
-              Didesain & Dibuat dengan ❤️ oleh アニサ
+              Designed & Built with ❤️ by アニサ
             </footer>
           </div>
         </div>
-      </main>
+      </motion.main>
     </div>
   );
 }
