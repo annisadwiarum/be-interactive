@@ -76,11 +76,11 @@ export default function PortfolioPage() {
         className="min-h-screen flex flex-col lg:flex-row"
       >
         {/* Left Side: Info & Navigation */}
-        <div className="lg:w-1/2 lg:h-screen lg:flex lg:flex-col justify-between p-8 lg:p-12 sticky top-0">
+        <div className="lg:w-1/2 lg:h-screen lg:flex lg:flex-col justify-between p-8 lg:p-12 lg:sticky lg:top-0 static">
           <div>
             <motion.div variants={childVariants}>
               <h1 className="text-4xl md:text-5xl font-bold text-white">
-                アニサ
+                アニサ <span className="text-sm">(Annisa Dwi Arum)</span>
               </h1>
               <h2 className="text-xl md:text-2xl text-cyan-400 mt-2">
                 Frontend Developer & Creative Coder
@@ -161,23 +161,37 @@ export default function PortfolioPage() {
               </h3>
               <div className="space-y-8">
                 <ProjectCard
-                  title="E-commerce Platform"
-                  description="Platform marketplace modern dengan fitur real-time chat dan sistem pembayaran terintegrasi."
-                  tags={["Next.js", "TypeScript", "Node.js", "Socket.IO"]}
+                  title="Seindo Travel - Flight & Hotel Booking Platform"
+                  description="A modern flight and hotel booking platform with real-time chat features and an integrated payment system."
+                  tags={["Next.js", "TypeScript", "Node.js"]}
+                  liveUrl="https://seindotravel.co.id/"
+                  codeUrl="#"
+                />
+                <ProjectCard
+                  title="Bemore - Online Fashion Store"
+                  description="Modern marketplace platform with smooth page transitions using Framer Motion and integrated payment system."
+                  tags={["Next.js", "Framer Motion"]}
+                  liveUrl="https://www.bemore.id/"
+                  codeUrl="#"
+                />
+                <ProjectCard
+                  title="Seindo Transport - Vehicle Rental CRM"
+                  description="React JS based application that manages vehicles to be installed systematically."
+                  tags={["ReactJS", "Laravel"]}
                   liveUrl="#"
                   codeUrl="#"
                 />
                 <ProjectCard
-                  title="Company Profile Interaktif"
-                  description="Website profil perusahaan dengan animasi 3D dan transisi halaman yang mulus menggunakan Framer Motion."
-                  tags={["Next.js", "Framer Motion", "Three.js"]}
+                  title="The Creative Kit - E-commerce Website"
+                  description="Monja clothing sales website with a contemporary and interactive design."
+                  tags={["Next.js", "Material Tailwind"]}
                   liveUrl="#"
                   codeUrl="#"
                 />
                 <ProjectCard
-                  title="Sistem Manajemen Proyek"
-                  description="Aplikasi berbasis Laravel untuk manajemen tugas dan kolaborasi tim dengan arsitektur modular."
-                  tags={["Laravel", "PHP", "Vue.js"]}
+                  title="Bemore - E-commerce Management System"
+                  description="Laravel based application for product management and Bemore team collaboration with modular architecture."
+                  tags={["Laravel", "PHP",]}
                   liveUrl="#"
                   codeUrl="#"
                 />
@@ -186,12 +200,12 @@ export default function PortfolioPage() {
 
             <AnimatedSection id="skills">
               <h3 className="text-2xl font-bold text-white mb-6 mt-16">
-               Skills & Technology
+                Skills & Technology
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 <SkillBadge name="TypeScript" />
                 <SkillBadge name="Next.js" />
-                <SkillBadge name="React" />
+                <SkillBadge name="ReactJs" />
                 <SkillBadge name="Node.js" />
                 <SkillBadge name="Tailwind CSS" />
                 <SkillBadge name="Framer Motion" />
@@ -206,7 +220,8 @@ export default function PortfolioPage() {
                   Got a cool idea?
                 </h3>
                 <p className="text-gray-400 mt-2">
-                  I&apos;m always open to collaboration or just chatting about technology. Let&apos;s connect!
+                  I&apos;m always open to collaboration or just chatting about
+                  technology. Let&apos;s connect!
                 </p>
                 <motion.a
                   href="mailto:annisadwiarum710@gmail.com"
@@ -220,7 +235,7 @@ export default function PortfolioPage() {
             </AnimatedSection>
 
             <footer className="text-center text-gray-500 text-sm py-8 mt-8">
-              Designed & Built with ❤️ by アニサ
+              Designed & Built with ❤️ by アニサ (Annisa)
             </footer>
           </div>
         </div>
