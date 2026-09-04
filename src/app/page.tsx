@@ -8,26 +8,23 @@ import SkillBadge from "@/components/SkillBadge";
 import SocialLink from "@/components/SocialLink";
 import { AnimatePresence, motion, useScroll, Variants } from "framer-motion";
 import {
+  Facebook,
   Github,
+  Instagram,
   Linkedin,
   Mail,
   Twitter,
-  Instagram,
-  Facebook,
+  MessageCircle,
+  Send,
 } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// --- Main App Component ---
 export default function PortfolioPage() {
   const scrollRef = useRef(null);
   const { scrollYProgress } = useScroll({ container: scrollRef });
-
-  // --- State untuk mengontrol preloader ---
   const [isLoading, setIsLoading] = useState(true);
 
-  // Sembunyikan preloader setelah animasi selesai
   useEffect(() => {
-    // Perkiraan durasi preloader. Anda bisa menyesuaikannya jika perlu.
     const totalDuration = 7000;
 
     const timer = setTimeout(() => {
@@ -43,7 +40,6 @@ export default function PortfolioPage() {
     };
   }, []);
 
-  // UPDATE: Varian animasi untuk container utama dan anak-anaknya
   const mainVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -51,7 +47,7 @@ export default function PortfolioPage() {
       transition: {
         duration: 0.8,
         ease: "easeInOut",
-        staggerChildren: 0.2, // Memberi jeda animasi pada setiap anak
+        staggerChildren: 0.2,
       },
     },
   };
@@ -75,7 +71,6 @@ export default function PortfolioPage() {
         animate={isLoading ? "hidden" : "visible"}
         className="min-h-screen flex flex-col lg:flex-row"
       >
-        {/* Left Side: Info & Navigation */}
         <div className="lg:w-1/2 lg:h-screen lg:flex lg:flex-col justify-between p-8 lg:p-12 lg:sticky lg:top-0 static">
           <div>
             <motion.div variants={childVariants}>
@@ -149,10 +144,17 @@ export default function PortfolioPage() {
               href="https://www.facebook.com/annisa.d.arum"
               icon={<Facebook size={20} />}
             />
+            <SocialLink
+              href="https://wa.me/6282184201814"
+              icon={<MessageCircle size={20} />}
+            />
+            <SocialLink
+              href="https://t.me/annisadwiarum"
+              icon={<Send size={20} />}
+            />
           </motion.div>
         </div>
 
-        {/* Right Side: Scrollable Content */}
         <div ref={scrollRef} className="lg:w-1/2 lg:h-screen overflow-y-scroll">
           <div className="p-8 lg:p-12">
             <AnimatedSection id="projects">
@@ -191,7 +193,7 @@ export default function PortfolioPage() {
                 <ProjectCard
                   title="Bemore - E-commerce Management System"
                   description="Laravel based application for product management and Bemore team collaboration with modular architecture."
-                  tags={["Laravel", "PHP",]}
+                  tags={["Laravel", "PHP"]}
                   liveUrl="#"
                   codeUrl="#"
                 />

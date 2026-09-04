@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-// Interactive Project Card
 function ProjectCard({ title, description, tags, liveUrl, codeUrl }: any) {
   return (
     <motion.div
@@ -25,9 +24,9 @@ function ProjectCard({ title, description, tags, liveUrl, codeUrl }: any) {
         <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white hover:text-cyan-400 transition-colors">
           Lihat Live <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
         </a>
-        <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white hover:text-cyan-400 transition-colors">
+        {/* <a href={codeUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-white hover:text-cyan-400 transition-colors">
           Lihat Kode <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-        </a>
+        </a> */}
       </div>
     </motion.div>
   );

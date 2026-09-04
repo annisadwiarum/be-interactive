@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 
-// Section with fade-in animation
 function AnimatedSection({ id, children }: any) {
   return (
     <motion.section

@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from 'framer-motion';
-import React from 'react';
 
-// Social Media Link
 function SocialLink({ href, icon }: any) {
   return (
     <motion.a

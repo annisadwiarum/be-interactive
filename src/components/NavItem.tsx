@@ -2,7 +2,6 @@
 import { motion,useTransform } from 'framer-motion';
 import React from 'react';
 
-// Navigation Item with scroll progress indicator
 function NavItem({ href, text, scrollYProgress, range }: any) {
   const width = useTransform(scrollYProgress, range, ['0%', '100%']);
   return (

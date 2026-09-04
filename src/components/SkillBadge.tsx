@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 
-// Skill Badge
 function SkillBadge({ name }: any) {
   return (
     <motion.div
